@@ -10,4 +10,7 @@ dataSources:
     maxLifetimeMilliseconds: 1800000
     maxPoolSize: 10
 
-rules: []
+rules:
+  - !SINGLE
+    tables:
+      - "*.*"
