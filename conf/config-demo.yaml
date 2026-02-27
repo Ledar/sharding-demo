@@ -1,0 +1,13 @@
+databaseName: demo_db
+
+dataSources:
+  demo_ds:
+    url: jdbc:mysql://demo-mysql:3306/demo_db?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: demo
+    connectionTimeoutMilliseconds: 30000
+    idleTimeoutMilliseconds: 60000
+    maxLifetimeMilliseconds: 1800000
+    maxPoolSize: 10
+
+rules: []

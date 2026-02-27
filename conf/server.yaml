@@ -1,0 +1,9 @@
+mode:
+  type: Standalone
+authority:
+  users:
+    - user: root@%
+      password: demo
+      admin: true
+  privilege:
+    type: ALL_PERMITTED

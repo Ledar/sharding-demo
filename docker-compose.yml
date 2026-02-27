@@ -1,0 +1,38 @@
+services:
+  demo-mysql:
+    image: mysql:8.0.34
+    platform: linux/arm64
+    container_name: demo-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=demo
+      - MYSQL_DATABASE=demo_db
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-pdemo"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - demo-net
+
+  demo-proxy:
+    image: apache/shardingsphere-proxy:5.5.2
+    platform: linux/arm64
+    container_name: demo-proxy
+    depends_on:
+      demo-mysql:
+        condition: service_healthy
+    ports:
+      - "3307:3307"
+    volumes:
+      - ./conf:/opt/shardingsphere-proxy/conf
+      - ./conf/ext-lib:/opt/shardingsphere-proxy/ext-lib
+    environment:
+      - JVM_OPTS="-Djava.awt.headless=true"
+    networks:
+      - demo-net
+
+networks:
+  demo-net:
+    driver: bridge
